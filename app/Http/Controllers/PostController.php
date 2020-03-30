@@ -12,8 +12,7 @@ class PostController extends Controller
     //utenti guest e admin
     public function index()
     {
-      $posts = Post::where('user_id', Auth::id())->get();
-
+      $posts = Post::all();
 
       return view ('guest.posts.index', compact('posts'));
     }
