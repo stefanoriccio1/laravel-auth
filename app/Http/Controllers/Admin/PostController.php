@@ -6,9 +6,23 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+
+    private $user;
+    private $validateRules;
+
+    public function __construct(){
+
+      $this->user = Auth::user();
+      $this->validate =[
+        'title'=> 'required|string|max:255',
+        'body'=> 'required|string'
+
+      ];
+    }
     /** solo admin
      * Display a listing of the resource.
      *
@@ -38,7 +52,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $thisUser = Auth::user();
+        $idUser = $this->user->id;
+
+        $request->validate($this->validateRules);
+        $data = $request->all();
+
+        $newPost= new Post;
+        $newPost->title = $data['title'];
+        $newPost->body = $data['body'];
+        $newPost->user_id = $idUser;
+        $newPost->slug = Str::finish(Str::slug($newPost->title), rand(1, 1000));
+
+        $newPost->save();
+
     }
 
     /**
