@@ -107,30 +107,30 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
       $idUser = Auth::user()->id;
-       if(empty($post)){
-           abort(404);
-       }
+        if(empty($post)){
+            abort(404);
+        }
 
-       if($post->user->id != $idUser){
-           abort(404);
-       }
+        if($post->user->id != $idUser){
+            abort(404);
+        }
 
-      $request->validate($this->validateRules);
-      $data = $request->all();
+        $request->validate($this->validateRules);
+        $data = $request->all();
 
-      $post= new Post;
-      $post->title = $data['title'];
-      $post->body = $data['body'];
-      $post->slug = Str::finish(Str::slug($newPost->title), rand(1, 1000));
-      $post->updated_at = Carbon::now();
+        $post->title = $data['title'];
+        $post->body = $data['body'];
+        $post->slug = Str::finish(Str::slug($post->title), rand(1, 1000000));
+        $post->updated_at = Carbon::now();
 
-      $updated = $post->update();
-      if(!$updated){
-        return redirect()->back();
-      }
+        $updated = $post->update();
+
+        if (!$updated) {
+            return redirect()->back();
+        }
 
 
-      return redirect()->route('admin.posts.show', ['post' => post->slug]);
+      return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**

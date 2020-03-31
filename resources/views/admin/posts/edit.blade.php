@@ -5,7 +5,7 @@
       {{-- <h2>{{Auth::user()->name}}</h2> --}}
       <form action="{{route('admin.posts.update', $post)}}" method="post">
         @csrf
-        @method('POST')
+        @method('PATCH')
         <div class="form-group">
           <label for="title">Title</label>
           <input type="text" name="title" value="{{$post->title}}">
