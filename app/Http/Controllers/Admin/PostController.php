@@ -63,6 +63,10 @@ class PostController extends Controller
         $newPost->user_id = $idUser;
         $newPost->slug = Str::finish(Str::slug($newPost->title), rand(1, 1000));
 
+        $saved = $newPost->save();
+        if(!$saved){
+          return redirect()->back();
+        }
         $newPost->save();
 
     }
