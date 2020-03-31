@@ -68,7 +68,7 @@ class PostController extends Controller
           return redirect()->back();
         }
         $newPost->save();
-
+        return redirect()->route('admin.posts.show', ['post' => $newpost->slug]);
     }
 
     /**
