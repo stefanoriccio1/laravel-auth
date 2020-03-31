@@ -11,12 +11,12 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
 
-    private $user;
+
     private $validateRules;
 
     public function __construct(){
 
-      $this->user = Auth::user();
+
       $this->validate =[
         'title'=> 'required|string|max:255',
         'body'=> 'required|string'
@@ -52,7 +52,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $idUser = $this->user->id;
+         $idUser = Auth::user()->id;
 
         $request->validate($this->validateRules);
         $data = $request->all();
