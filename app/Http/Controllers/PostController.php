@@ -16,4 +16,15 @@ class PostController extends Controller
 
       return view ('guest.posts.index', compact('posts'));
     }
+
+    public function show(){
+
+      $post = POST::where('slug', $slug)->get();
+
+      if(empty($post)){
+        abort(404);
+      }
+
+      return view()
+    }
 }
