@@ -17,7 +17,7 @@ class PostController extends Controller
     public function __construct(){
 
 
-      $this->validate =[
+      $this->validateRules =[
         'title'=> 'required|string|max:255',
         'body'=> 'required|string'
 
@@ -68,7 +68,8 @@ class PostController extends Controller
           return redirect()->back();
         }
         $newPost->save();
-        return redirect()->route('admin.posts.show', ['post' => $newpost->slug]);
+
+        return redirect()->route('admin.posts.show', ['post' => $newPost->slug]);
     }
 
     /**
