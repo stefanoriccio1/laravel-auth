@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/posts/{slug}', 'PostController@show')->name('posts.show');
 
 Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function(){
   Route::get('/home', 'HomeController@index')->name('home');
