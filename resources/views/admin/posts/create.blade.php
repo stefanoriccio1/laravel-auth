@@ -16,6 +16,16 @@
 
           </textarea>
         </div>
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          @foreach ($tags as $tag)
+            <div class="">
+              <span>{{$tag->name}}</span>
+              <input type="checkbox" name="tags[]"value="{{$tag->id}}">
+            </div>
+          @endforeach
+
+        </div>
         {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
         <button class="btn btn-success" type="submit">Salva</button>
       </form>
