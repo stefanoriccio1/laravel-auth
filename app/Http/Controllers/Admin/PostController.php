@@ -187,6 +187,7 @@ class PostController extends Controller
           abort(404);
         }
 
+        $post->images()->detach();
         $post->tags()->detach();
         $post->delete();
         return redirect()->route('admin.posts.index');
