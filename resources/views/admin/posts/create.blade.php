@@ -19,7 +19,7 @@
         <div class="form-group">
           <label for="tags">Tags</label>
           @foreach ($tags as $tag)
-            <div class="">
+            <div>
               <span>{{$tag->name}}</span>
               <input type="checkbox" name="tags[]"value="{{$tag->id}}">
             </div>

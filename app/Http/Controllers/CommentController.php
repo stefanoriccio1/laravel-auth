@@ -20,18 +20,19 @@ class CommentController extends Controller
         'body'=> 'required|string|max:150',
         'name' =>'required|string|max:80',
         'email' => 'required|email',
-        'post_id' => 'required|numeric|exists:posts, id'
+        'post_id' => 'required|numeric|exists:App\Post,id'
 
       ];
     }
 
     public function store(Request $request)
     {
+      // dd($request->all());
       $request->validate($this->validateRules);
       $data = $request->all();
 
       $comment = new Comment;
-      $comment-> fill($data);
+      $comment->fill($data);
       $saved = $comment->save();
 
       if(!$saved){

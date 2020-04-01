@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('content')
   <div class="container">
+    @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+    @endif
     <div class="row">
       <div class="col-12">
             <h2>{{$post->title}}</h2>
@@ -48,8 +57,8 @@
               <input class="form-control" type="text" name="name">
             </div>
             <div class="form-group">
-              <label for="mail">La tua email</label>
-              <input class="form-control" type="text" name="mail">
+              <label for="email">La tua email</label>
+              <input class="form-control" type="text" name="email">
             </div>
             <input type="hidden" name="post_id" value="{{$post->id}}">
             <button class="btn btn-primary" type="submit" name="button">Invia</button>

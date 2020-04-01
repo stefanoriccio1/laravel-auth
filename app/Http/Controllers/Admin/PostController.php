@@ -43,9 +43,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tag = Tag::all();
+        $tags = Tag::all();
         // dd($tag);
-        return view('admin.posts.create', compact('tags'));
+        return view('admin.posts.create', ['tags' => $tags]); //compact('tags')
     }
 
     /**
