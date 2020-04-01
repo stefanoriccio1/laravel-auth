@@ -104,7 +104,13 @@ class PostController extends Controller
     public function edit($slug)
     {
       $post = Post::where('slug', $slug)->first();
-      return view('admin.posts.edit', compact('post'));
+      $tags = Tag::all();
+      $data = [
+        'tags' => $tags,
+        'posts' => $post
+      ];
+
+      return view('admin.posts.edit', $data);
     }
 
     /**
