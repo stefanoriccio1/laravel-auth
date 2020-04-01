@@ -9,8 +9,17 @@
             <small>Scritto da: {{$post->user->name}}</small>
             <div class="">
               {{$post->body}}
-              <a href="{{route('posts.show', $post->slug)}}">Leggi</a>
             </div>
+            <div>
+              tags
+              @forelse($post->tags as $tag)
+                {{$tag->name}}
+              @empty
+                No tag
+
+              @endforelse
+            </div>
+              <a href="{{route('posts.show', $post->slug)}}">Leggi</a>
           </div>
         @endforeach
       </div>
