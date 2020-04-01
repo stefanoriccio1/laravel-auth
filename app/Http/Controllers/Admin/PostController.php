@@ -115,14 +115,16 @@ class PostController extends Controller
     public function edit($slug)
     {
       $post = Post::where('slug', $slug)->first();
-      $tags = Tag::all();
-      $data = [
-        'tags' => $tags,
-        'post' => $post
-      ];
+        $tags = Tag::all();
+        $images = Image::all();
 
+        $data = [
+            'tags' => $tags,
+            'post' => $post,
+            'images' => $images
+        ];
 
-      return view('admin.posts.edit', $data);
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -136,43 +138,48 @@ class PostController extends Controller
     {
 
       $idUser = Auth::user()->id;
-        if(empty($post)){
-            abort(404);
-        }
+       if(empty($post)){
+           abort(404);
+       }
 
-        if($post->user->id != $idUser){
-            abort(404);
-        }
+       if($post->user->id != $idUser){
+           abort(404);
+       }
 
-        $request->validate($this->validateRules);
-        $data = $request->all();
+       $request->validate($this->validateRules);
+       $data = $request->all();
 
+       $post->title = $data['title'];
+       $post->body = $data['body'];
+       $post->slug = Str::finish(Str::slug($post->title), rand(1, 1000000));
+       $post->updated_at = Carbon::now();
 
-        $post->title = $data['title'];
-        $post->body = $data['body'];
-        $post->slug = Str::finish(Str::slug($post->title), rand(1, 1000000));
-        $post->updated_at = Carbon::now();
+       $updated = $post->update();
 
-        $updated = $post->update();
+       if (!$updated) {
+           return redirect()->back();
+       }
 
-        if (!$updated) {
-            return redirect()->back();
-        }
+       $tags = $data['tags'];
+       $images = $data['images'];
 
-        $tags = $data['tags'];
+// serve per staccare il tag che deselezionamo se aggiorniamo senza⁄ß
+       // foreach ($tags as $key => $tag) {
+       //     $tagSearched = Tag::find($tag);
+       //     if(empty($tagSearched)){
+       //         unset($tags[$key]);
+       //     }
+       // }
 
-        foreach ($tags as $key => $tag) {
-          $tagSearched = Tag::find($tag);
-          if(empty($tagSearched)){
-            unset($tags[$key]);
-          }
-        }
+       if (!empty($tags)) {
+           $post->tags()->sync($tags);
+       }
 
-        if(!empty($tags)) {
-            $post->tags()->sync($tags);
-        }
+       if (!empty($images)) {
+           $post->images()->sync($images);
+       }
 
-      return redirect()->route('admin.posts.show', $post->slug);
+       return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
