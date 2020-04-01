@@ -51,7 +51,7 @@ class PostController extends Controller
           'tags' => $tags,
           'images' => $images
         ];
-        return view('admin.posts.create', $data); 
+        return view('admin.posts.create', $data);
     }
 
     /**
@@ -84,6 +84,11 @@ class PostController extends Controller
         $tags = $data['tags'];
         if(!empty($tags)) {
             $newPost->tags()->attach($tags);
+        }
+
+        $images = $data['images'];
+        if(!empty($images)){
+          $newPost->images()->attach($images);
         }
 
         return redirect()->route('admin.posts.show', ['post' => $newPost->slug]);
