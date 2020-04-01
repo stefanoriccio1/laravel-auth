@@ -107,8 +107,9 @@ class PostController extends Controller
       $tags = Tag::all();
       $data = [
         'tags' => $tags,
-        'posts' => $post
+        'post' => $post
       ];
+
 
       return view('admin.posts.edit', $data);
     }
@@ -122,6 +123,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+      
       $idUser = Auth::user()->id;
         if(empty($post)){
             abort(404);
@@ -134,6 +136,7 @@ class PostController extends Controller
         $request->validate($this->validateRules);
         $data = $request->all();
 
+
         $post->title = $data['title'];
         $post->body = $data['body'];
         $post->slug = Str::finish(Str::slug($post->title), rand(1, 1000000));
@@ -145,6 +148,10 @@ class PostController extends Controller
             return redirect()->back();
         }
 
+        $tags = $data['tags'];
+        if(!empty($tags)) {
+            $post->tags()->sync($tags);
+        }
 
       return redirect()->route('admin.posts.show', $post->slug);
     }
