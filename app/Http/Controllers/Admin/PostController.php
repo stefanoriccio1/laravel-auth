@@ -123,7 +123,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-      
+
       $idUser = Auth::user()->id;
         if(empty($post)){
             abort(404);
@@ -149,6 +149,14 @@ class PostController extends Controller
         }
 
         $tags = $data['tags'];
+
+        foreach ($tags as $key => $tag) {
+          $tagSearched = Tag::find($tag);
+          if(empty($tagSearched)){
+            unset($tags[$key]);
+          }
+        }
+
         if(!empty($tags)) {
             $post->tags()->sync($tags);
         }
