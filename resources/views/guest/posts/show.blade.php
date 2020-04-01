@@ -12,6 +12,7 @@
     </div>
     <div class="row">
       <div class="col-12">
+        <h2>Commenti</h2>
         @foreach ($post->comments as $comment)
           <h3>{{$comment->title}}</h3>
           <small>{{$comment->name}}</small>
