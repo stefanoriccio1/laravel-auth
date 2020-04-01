@@ -13,14 +13,23 @@
     <div class="row">
       <div class="col-12">
         <h2>Commenti</h2>
-        @foreach ($post->comments as $comment)
+        {{-- @foreach ($post->comments as $comment)
           <h3>{{$comment->title}}</h3>
           <small>{{$comment->name}}</small>
           <div class="">
             {{$comment->body}}
           </div>
+        @endforeach --}}
 
-        @endforeach
+        @forelse($post->comments as $comment)
+          <h3>{{$comment->title}}</h3>
+          <small>{{$comment->name}}</small>
+          <div>
+            {{$comment->body}}
+          </div>
+        @empty
+          <p>No Comments</p>
+        @endforelse
       </div>
     </div>
   </div>
