@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use App\Tag;
+use App\Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -44,8 +45,13 @@ class PostController extends Controller
     public function create()
     {
         $tags = Tag::all();
-        // dd($tag);
-        return view('admin.posts.create', ['tags' => $tags]); //compact('tags')
+        $images = Image::all();
+
+        $data = [
+          'tags' => $tags,
+          'images' => $images
+        ];
+        return view('admin.posts.create', $data); 
     }
 
     /**

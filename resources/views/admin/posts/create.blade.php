@@ -26,6 +26,15 @@
           @endforeach
 
         </div>
+        <div class="form-group">
+          <label for="images">Images</label>
+          @foreach ($images as $image)
+            <div>
+              <h3>{{$image->name}}</h3>
+              <input type="checkbox" name="images[]"value="{{$image->id}}">
+          @endforeach
+
+        </div>
         {{-- <input type="hidden" name="user_id" value="{{Auth::id()}}"> --}}
         <button class="btn btn-success" type="submit">Salva</button>
       </form>
