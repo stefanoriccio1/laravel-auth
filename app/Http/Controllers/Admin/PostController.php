@@ -74,11 +74,11 @@ class PostController extends Controller
           return redirect()->back();
         }
 
+
         $tags = $data['tags'];
         if(!empty($tags)) {
             $newPost->tags()->attach($tags);
         }
-
 
         return redirect()->route('admin.posts.show', ['post' => $newPost->slug]);
     }
@@ -155,6 +155,7 @@ class PostController extends Controller
           abort(404);
         }
 
+        $post->tags()->detach();
         $post->delete();
         return redirect()->route('admin.posts.index');
     }
