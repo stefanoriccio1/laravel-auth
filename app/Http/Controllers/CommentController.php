@@ -18,9 +18,9 @@ class CommentController extends Controller
       $this->validateRules =[
         'title'=> 'required|string',
         'body'=> 'required|string|max:150',
-        'name' =>'required|max:80',
+        'name' =>'required|string|max:80',
         'email' => 'required|email',
-        'post_id' => 'required|numeric|exists:posts'
+        'post_id' => 'required|numeric|exists:posts, id'
 
       ];
     }
@@ -29,5 +29,15 @@ class CommentController extends Controller
     {
       $request->validate($this->validateRules);
       $data = $request->all();
+
+      $comment = new Comment;
+      $comment-> fill($data);
+      $saved = $comment->save();
+
+      if(!$saved){
+        return redirect()->back();
+      }
+
+      return redirect()->route('posts.show', $comment->post->slug);
     }
 }

@@ -32,7 +32,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <form action="index.html" method="post">
+          <form action="{{route('comments.store')}}" method="POST">
             @csrf
             @method('POST')
             <div class="form-group">
@@ -52,7 +52,7 @@
               <input class="form-control" type="text" name="mail">
             </div>
             <input type="hidden" name="post_id" value="{{$post->id}}">
-            <button class="btn btn-primary" type="button" name="button">Invia</button>
+            <button class="btn btn-primary" type="submit" name="button">Invia</button>
           </form>
         </div>
       </div>
