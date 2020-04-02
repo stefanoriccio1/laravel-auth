@@ -77,7 +77,7 @@ class PostController extends Controller
 
         $saved = $newPost->save();
         if(!$saved){
-          return redirect()->back();
+          return redirect()->back()->withInput();
         }
 
 
@@ -157,7 +157,7 @@ class PostController extends Controller
        $updated = $post->update();
 
        if (!$updated) {
-           return redirect()->back();
+           return redirect()->back()-withInput();
        }
 
        $tags = $data['tags'];
